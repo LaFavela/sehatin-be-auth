@@ -46,6 +46,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
 
+# Run Octane Install Swoole
+RUN php artisan octane:install --server=swoole
+
 # Octane setup (if not done yet)
 RUN php artisan config:clear \
     && php artisan config:cache \

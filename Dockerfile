@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     libzip-dev \
     librabbitmq-dev \
+    nodejs \
+    npm \
     && docker-php-ext-configure zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mbstring pdo pdo_mysql xml bcmath zip pcntl sockets
@@ -46,6 +48,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
 
+# Install npm dependencies
+RUN npm install --save-dev chokidar
+
 # Run Octane Install Swoole
 RUN php artisan octane:install --server=swoole
 
@@ -56,6 +61,3 @@ RUN php artisan config:clear \
 
 # Expose Octane port
 EXPOSE 8000
-
-# Start Laravel Octane using Swoole
-CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0", "--port=8000"]

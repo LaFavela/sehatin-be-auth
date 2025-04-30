@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
 use MongoDB\Laravel\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, MustVerifyEmail, SoftDeletes, HasTimestamps;
+    use HasFactory, MustVerifyEmail, SoftDeletes, HasTimestamps, HasRoles;
 
     protected $connection = 'mongodb';
 

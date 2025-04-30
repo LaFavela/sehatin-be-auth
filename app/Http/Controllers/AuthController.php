@@ -164,6 +164,6 @@ class AuthController
         } catch (\Exception $e) {
             return (new MessageResource(null, false, 'Could not create user', $e->getMessage()))->response()->setStatusCode(500);
         }
-
     }
+
 }

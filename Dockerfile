@@ -39,7 +39,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html
 
 # Mark the directory as safe
-RUN git config --global --add safe.directory /var/www/html
+#RUN git config --global --add safe.directory /var/www/html
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
@@ -51,12 +51,12 @@ RUN composer install --optimize-autoloader --no-dev
 # Install npm dependencies
 RUN npm install --save-dev chokidar
 
-# Run Octane Install Swoole
+# Run Octane Install
 RUN php artisan octane:install --server=swoole
 
 # Octane setup (if not done yet)
 RUN php artisan config:clear \
-    && php artisan config:cache \
+#    && php artisan config:cache \
     && php artisan route:cache
 
 # Expose Octane port

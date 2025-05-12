@@ -43,7 +43,7 @@ class OtpController
 //                ->subject('Your OTP Code');
 //        });
 
-            return (new MessageResource($otp, true, 'OTP sent successfully'))->response()->setStatusCode(200);
+            return (new MessageResource('OTP sent successfully'))->response()->setStatusCode(200);
         } catch (\Throwable $th) {
             return (new MessageResource(null, false, 'Failed to send OTP', $th->getMessage()))->response()->setStatusCode(500);
         }
@@ -52,13 +52,13 @@ class OtpController
     public function verify(VerifyOtpRequest $request, $session_token): JsonResponse
     {
 
+        if (isset($request->validator) && $request->validator->fails()) {
+            return (new MessageResource(null, false, 'Validation failed', $request->validator->messages()))->response()->setStatusCode(400);
+        }
+
         try {
             if (!$session = Otp::where('token', $session_token)->first()) {
                 return (new MessageResource(null, false, 'Token is invalid'))->response()->setStatusCode(401);
-            }
-
-            if (isset($request->validator) && $request->validator->fails()) {
-                return (new MessageResource(null, false, 'Validation failed', $request->validator->messages()))->response()->setStatusCode(400);
             }
 
             // Verify OTP

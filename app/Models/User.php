@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Auth\User as Authenticatable;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
 use MongoDB\Laravel\Relations\BelongsToMany;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, MustVerifyEmail, SoftDeletes, HasTimestamps, HasRoles;
 
@@ -64,11 +65,5 @@ class User extends Authenticatable
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    // Roles many relationship
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
     }
 }

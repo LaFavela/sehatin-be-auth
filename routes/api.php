@@ -16,4 +16,5 @@ Route::prefix('auth')->group(function () {
         Route::post('assign', [RoleController::class, 'assignRole']);
         Route::post('remove', [RoleController::class, 'removeRole']);
     });
+    Route::post('reset-password', [AuthController::class, 'resetPassword']);
 });

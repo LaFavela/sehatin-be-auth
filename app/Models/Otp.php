@@ -10,6 +10,14 @@ class Otp extends Model
 
     protected $primaryKey = 'token';
 
+    /**
+     * The attributes that define the default values for the model's attributes.
+     *
+     * @var array<int, string>
+     */
+    protected $attributes = [
+        'verified_at' => null,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -19,10 +27,18 @@ class Otp extends Model
     protected $fillable = [
         'otp',
         'expires_at',
-        'token'
+        'token',
+        'type',
     ];
 
-
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'otp'
+    ];
 
     /**
      * The attributes that should be cast.
@@ -33,6 +49,9 @@ class Otp extends Model
     {
         return [
             'expires_at' => 'datetime',
+            'verified_at' => 'datetime',
+            'otp' => 'hashed',
+            'type' => 'string',
         ];
     }
 }

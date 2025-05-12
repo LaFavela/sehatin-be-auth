@@ -15,15 +15,7 @@ trait HasRoles
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
     }
 
-    /**
-     * Find a user by email
-     */
-    public static function find(string $email)
-    {
-        return static::where('id', $email)->first();
-    }
-
-    /**
+    /**\
      * Assign a role to the user
      */
     public function assignRole(Role|string $role): void

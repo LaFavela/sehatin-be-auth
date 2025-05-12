@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace app\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use app\Enum\Otp;
+use Illuminate\Foundation\Http\FormRequest;
 
-class SendOtpRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,13 @@ class SendOtpRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'type' => ['required', Rule::enum(Otp::class)]
         ];
     }
 
     // Failed validation method
     public $validator = null;
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator): void
     {
         $this->validator = $validator;
     }
